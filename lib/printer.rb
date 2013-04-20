@@ -3,9 +3,7 @@ module Sudoku
     def self.print(board)
       puts "Results:"
       if board        
-        board.rows.each do |row|
-          puts row.join
-        end
+        puts board.rows.collect{ |row| row.join}.join("\n")
       else
         puts "Board cannot be solved"
       end
