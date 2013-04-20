@@ -1,6 +1,7 @@
 module Sudoku
   class Board
     BOARD_SIZE = 9
+    POSSIBLE_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     def initialize
       @rows = Array.new(BOARD_SIZE){ Array.new(BOARD_SIZE) }
@@ -76,10 +77,9 @@ module Sudoku
     end
 
     def fill_possibilities
-      possibilities = [1, 2, 3, 4, 5, 6, 7, 8, 9]
       rows.each do |row|
         (0..8).each do |index|
-          row[index] = possibilities.clone unless row[index]
+          row[index] = POSSIBLE_VALUES.clone unless row[index]
         end
       end
     end
