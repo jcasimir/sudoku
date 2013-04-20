@@ -35,4 +35,11 @@ describe Sudoku::Solver do
     expect( solved ).to(eq(completed))
   end
 
+  it "solves an element which can only be found by solving the block" do
+    starter = Sudoku::Parser.parse('./samples/problem_1_solution')
+    starter[0,0] = starter[3,0] = starter[0,3] = starter[3,3] = nil
+    solved = Sudoku::Solver.solve(starter)
+    expect( solved.value_at(0,0) ).to eq 4
+  end
+
 end

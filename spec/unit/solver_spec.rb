@@ -1,4 +1,5 @@
 require './lib/solver'
+require './lib/board'
 
 describe Sudoku::Solver do 
   describe '.solve_row' do
@@ -34,6 +35,14 @@ describe Sudoku::Solver do
       board = Sudoku::Board.new
       output = Sudoku::Solver.solve(board)
       expect(output.column(0)).to be
+    end
+  end
+
+  describe '.solve_block' do
+    it "solves a block with one missing value" do
+      input = [nil, 2, 3, 4, 5, 6, 7, 8, 9]
+      output = Sudoku::Solver.solve_block(input)
+      expect(output).to eq [1, 2, 3, 4, 5, 6, 7, 8, 9]
     end
   end
 end

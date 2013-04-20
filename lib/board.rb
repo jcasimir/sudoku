@@ -14,6 +14,10 @@ module Sudoku
       @rows[y]
     end
 
+    def rows
+      @rows
+    end
+
     def set_row(y, values)
       @rows[y] = values
     end
@@ -34,6 +38,27 @@ module Sudoku
       end
     end
 
+    def block(index)
+      # find first row and column based on index
+      # get first three values of each row starting at column
+      start = Board.start_coordinates_for_block(index)
+      (0..2).collect do |col|
+        (0..2).collect do |row|
+          value_at(col + start[0], row + start[1])
+        end
+      end.flatten
+    end
+
+    def blocks
+      (0..8).collect{|i| block(i)}
+    end
+
+    def self.start_coordinates_for_block(index)
+      row = (index / 3)*3
+      column = (index*3) % 9
+      [column, row]
+    end
+
     def []=(x, y, value)
       @rows[y][x] = value
     end
@@ -42,8 +67,6 @@ module Sudoku
       self.rows == other_board.rows
     end
 
-    def rows
-      @rows
-    end
+    
   end
 end

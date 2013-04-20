@@ -5,6 +5,7 @@ module Sudoku
     end
 
     def self.solve(board)
+      
       board.rows.each_with_index do |row, i|
         solved_row = solve_row(board.row(i))        
         board.set_row(i, solved_row) if solved_row
@@ -13,32 +14,35 @@ module Sudoku
         solved_column = solve_column(board.column(i))        
         board.set_column(i, solved_column) if solved_column
       end
+      board.blocks.each_with_index do |block, i|
+        solved_block = solve_block(board.block(i))
+        board.set_block(i, solved_block) if solved_block
+      end
+
       board
     end
 
     def self.solve_row(row)
-      difference = possible_values - row
-      
-      if difference.size == 1 
-        target = row.index(nil)
-        row[target] = difference.first
-        row
-      elsif difference.size == 0
-        row
-      else
-        false
-      end
+      solve_set(row)
     end
 
     def self.solve_column(column)
-      difference = possible_values - column
+      solve_set(column)
+    end
+
+    def self.solve_block(block)
+      solve_set(block)
+    end
+
+    def self.solve_set(input)
+      difference = possible_values - input
       
       if difference.size == 1 
-        target = column.index(nil)
-        column[target] = difference.first
-        column
+        target = input.index(nil)
+        input[target] = difference.first
+        input
       elsif difference.size == 0
-        column
+        input
       else
         false
       end
