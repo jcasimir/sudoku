@@ -7,16 +7,20 @@ module Sudoku
       input_file = File.open(path, 'r')
       input_file.each_with_index do |row, y|
         values = row.chomp.split("").collect do |cell| 
-          if cell == "."
-            nil
-          else
-            cell.to_i
-          end
+          text_to_integer(cell)
         end
         board.set_row(y, values)
       end
       
       return board
+    end
+
+    def self.text_to_integer(input)
+      if input == "."
+        nil
+      else
+        input.to_i
+      end
     end
   end
 end
