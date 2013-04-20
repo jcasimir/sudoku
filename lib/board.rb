@@ -38,15 +38,23 @@ module Sudoku
       end
     end
 
+    def set_block(index, values)
+      start = Board.start_coordinates_for_block(index)
+      (0..2).each do |col|
+        (0..2).each do |row|
+          values_index = col*3 + row
+          self[col + start[0], row + start[1]] = values[values_index]
+        end
+      end
+    end
+
     def block(index)
-      # find first row and column based on index
-      # get first three values of each row starting at column
       start = Board.start_coordinates_for_block(index)
       (0..2).collect do |col|
         (0..2).collect do |row|
           value_at(col + start[0], row + start[1])
         end
-      end.flatten
+      end.flatten(1)
     end
 
     def blocks
@@ -67,6 +75,71 @@ module Sudoku
       self.rows == other_board.rows
     end
 
+    def fill_possibilities
+      possibilities = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      rows.each do |row|
+        (0..8).each do |index|
+          row[index] = possibilities.clone unless row[index]
+        end
+      end
+    end
+
+    def remove_from_set(set, values_for_removal)
+      set.collect do |cell|
+        if cell.kind_of?(Array)
+          cell = cell - values_for_removal
+          cell = cell.first if cell.size == 1
+        end
+        cell
+      end
+    end
+
+    def remove_by_row
+      changed = false
+      rows.each_with_index do |row, i|
+        known_values = row.select{|cell| !cell.kind_of?(Array) }
+        result = remove_from_set(row, known_values)
+        unless row == result
+          set_row(i, result)
+          changed = true
+        end
+      end
+      return changed
+    end
+
+    def remove_by_column
+      changed = false
+      columns.each_with_index do |column, i|
+        known_values = column.select{|cell| !cell.kind_of?(Array) }
+        result = remove_from_set(column, known_values)
+        unless column == result
+          set_column(i, result)
+          changed = true
+        end
+      end
+      return changed
+    end
+
+    def remove_by_block
+      changed = false
+      blocks.each_with_index do |block, i|
+        known_values = block.select{|cell| !cell.kind_of?(Array) }
+        result = remove_from_set(block, known_values)
+        
+        unless block == result
+
+          set_block(i, result)
+          changed = true
+        end
+      end
+      return changed
+    end 
+
+    def solved?
+      rows.all? do |row|
+        row.all?{|cell| cell.kind_of?(Fixnum)}
+      end
+    end
     
   end
 end

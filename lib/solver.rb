@@ -5,19 +5,14 @@ module Sudoku
     end
 
     def self.solve(board)
-      
-      board.rows.each_with_index do |row, i|
-        solved_row = solve_row(board.row(i))        
-        board.set_row(i, solved_row) if solved_row
-      end
-      board.columns.each_with_index do |column, i|
-        solved_column = solve_column(board.column(i))        
-        board.set_column(i, solved_column) if solved_column
-      end
-      board.blocks.each_with_index do |block, i|
-        solved_block = solve_block(board.block(i))
-        board.set_block(i, solved_block) if solved_block
-      end
+      board.fill_possibilities
+      iterate(board)
+    end
+
+    def self.iterate(board)
+      changed = false
+      changed = board.remove_by_row | board.remove_by_column | board.remove_by_block
+      iterate(board) if changed
 
       board
     end

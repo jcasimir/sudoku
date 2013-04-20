@@ -3,7 +3,6 @@ require './lib/parser'
 
 describe Sudoku::Solver do
 	it "solves a complex puzzle" do
-		pending
 		starter = Sudoku::Parser.parse('./samples/problem_1')
 		completed = Sudoku::Parser.parse('./samples/problem_1_solution')
 		solved = Sudoku::Solver.solve(starter)
@@ -40,6 +39,19 @@ describe Sudoku::Solver do
     starter[0,0] = starter[3,0] = starter[0,3] = starter[3,3] = nil
     solved = Sudoku::Solver.solve(starter)
     expect( solved.value_at(0,0) ).to eq 4
+  end
+
+  it "solves a board with just one blank block" do
+    input = Sudoku::Parser.parse('./samples/problem_1_solution')
+    (0..2).each do |col|
+      (0..2).each do |row|
+        input[col, row] = nil
+      end
+    end
+    result = Sudoku::Solver.solve(input)
+    expected = Sudoku::Parser.parse('./samples/problem_1_solution')
+    expect( result ).to eq expected
+
   end
 
 end

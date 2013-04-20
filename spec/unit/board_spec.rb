@@ -93,4 +93,46 @@ describe Sudoku::Board do
       expect( Sudoku::Board.start_coordinates_for_block(2) ).to eq [6,0]
     end
   end
+
+  describe "#remove_by_row" do
+    it "removes possibilities for a row when known values exist" do
+      board = Sudoku::Board.new
+      board.fill_possibilities
+      board[0,0] = 9
+      expect(board.value_at(1,0)).to include 9
+      board.remove_by_row
+      expect(board.value_at(1,0)).to_not include 9
+    end
+
+  end
+
+  describe "#remove_by_column" do
+    it "removes possibilities for a column when known values exist" do
+      board = Sudoku::Board.new
+      board.fill_possibilities
+      board[0,0] = 9
+      expect(board.value_at(0,1)).to include 9
+      board.remove_by_column
+      expect(board.value_at(0,1)).to_not include 9
+    end
+  end
+
+  describe "#remove_by_block" do
+    it "removes possibilities for a block when known values exist" do
+      board = Sudoku::Board.new
+      board.fill_possibilities
+      board[0,0] = 9
+      expect(board.value_at(1,1)).to include 9
+      board.remove_by_block
+      expect(board.value_at(1,1)).to_not include 9
+    end
+  end 
+
+  describe "#set_block" do
+    it "sets a block" do
+      board = Sudoku::Board.new
+      board.set_block(8, Array.new(9){ 1 })
+      expect(board.block(8)).to eq Array.new(9){ 1 }
+    end
+  end 
 end
