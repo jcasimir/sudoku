@@ -7,6 +7,12 @@ module Sudoku
     def self.solve(board)
       board.fill_possibilities
       iterate(board)
+
+      if board.solved?
+        return board
+      else
+        false
+      end
     end
 
     def self.iterate(board)
