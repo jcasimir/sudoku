@@ -66,9 +66,7 @@ module Sudoku
       blocks.each_with_index do |block, i|
         known_values = block.select{|cell| !cell.kind_of?(Array) }
         result = remove_from_set(block, known_values)
-        
         unless block == result
-
           set_block(i, result)
           changed = true
         end
