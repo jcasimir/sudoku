@@ -1,5 +1,3 @@
-require './lib/board'
-
 module Sudoku
   class Parser
     def self.parse(path)

@@ -1,6 +1,4 @@
-require './lib/parser'
-require './lib/solver'
-require './lib/printer'
+require './lib/sudoku'
 
 filename = ARGV[0]
 board = Sudoku::Parser.parse(filename)

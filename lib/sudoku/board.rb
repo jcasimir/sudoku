@@ -1,5 +1,3 @@
-require './lib/solver'
-
 module Sudoku
   class Board
     attr_reader :rows

@@ -1,18 +1,34 @@
 ## Sudoku Solver
 
-Sudoku Solver written for NAAAP workshop "Day in the Field"
+On Saturday, April 20th 2013, I participated in a NAAAP "Day in the Field" workshop at the Colorado School of Mines. In this session I worked with two students and one other mentor to demonstrate and practice test-driven development in Ruby. These are the results.
 
-### Expectations
+### From the Command Line
 
-* Pass in a board
-* Get out either
-  * A) A complete solution
-  * B) Error that the puzzle cannot be solved
+* Create a plain-text file with the Sudoku problem to be solved
+* Use periods for each blank to be determined
+* For an example, see `samples/problem_1`
 
-### Usage
+Then, from the project's root directory, run the following:
+
+```bash
+ruby ./lib/sudoku/runner.rb your_problem_file
+```
+
+Where `your_problem_file` is the path/filename of your input problem. For instance, to run the `problem_1` example:
+
+```
+ruby ./lib/sudoku/runner.rb ./samples/problem_1
+```
+
+### From Ruby
+
+You can also use the library from your own Ruby program or IRB session:
 
 ```ruby
-
+require './lib/sudoku'
+board = Sudoku::Parser('your_problem_path/problem_filename')
+board.solve
+Sudoku::Printer.print(board)
 ```
 
 ### License

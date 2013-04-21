@@ -1,4 +1,4 @@
-require './lib/board'
+require './lib/sudoku'
 
 describe Sudoku::Board do
   describe '#value_at' do

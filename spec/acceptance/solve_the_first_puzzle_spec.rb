@@ -1,5 +1,4 @@
-require './lib/solver'
-require './lib/parser'
+require './lib/sudoku'
 
 describe Sudoku::Solver do
 	it "solves a complex puzzle" do
