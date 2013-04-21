@@ -4,16 +4,18 @@ module Sudoku
   class Board
     attr_reader :rows
     
-    BOARD_SIZE = 9
-
     include Solver
 
     def initialize
-      @rows = Array.new(BOARD_SIZE){ Array.new(BOARD_SIZE) }
+      @rows = Array.new(board_size){ Array.new(board_size) }
+    end
+
+    def board_size
+      9
     end
 
     def possible_values
-      (1..BOARD_SIZE).to_a
+      (1..board_size).to_a
     end
 
     def []=(x, y, value)
@@ -41,7 +43,7 @@ module Sudoku
     end
 
     def columns
-      (0...BOARD_SIZE).collect{|i| column(i)}
+      (0...board_size).collect{|i| column(i)}
     end
 
     def set_column(x, values)
