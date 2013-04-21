@@ -1,9 +1,5 @@
 module Sudoku
 	module Solver
-    def possible_values
-      [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    end
-
     def fill_possibilities
       rows.each do |row|
         (0..8).each do |index|
@@ -14,13 +10,13 @@ module Sudoku
 
     def solve
       fill_possibilities
-      Solver.iterate(self)
-      self if solved?
+      iterate
+      return self if solved?
     end
 
-    def self.iterate(board)
-      changed = board.remove_by_row | board.remove_by_column | board.remove_by_block | false
-      changed ? iterate(board) : board
+    def iterate
+      iterate if [remove_by_row, remove_by_column, remove_by_block].any?
+      return self
     end
 
     def solved?

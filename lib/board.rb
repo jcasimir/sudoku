@@ -12,6 +12,10 @@ module Sudoku
       @rows = Array.new(BOARD_SIZE){ Array.new(BOARD_SIZE) }
     end
 
+    def possible_values
+      (1..BOARD_SIZE).to_a
+    end
+
     def []=(x, y, value)
       rows[y][x] = value
     end
@@ -47,20 +51,20 @@ module Sudoku
     end
 
     def set_block(index, values)
-      start = start_coordinates_for_block(index)
-      (0..2).each do |col|
+      start = origin_for_block(index)
+      (0..2).each do |column|
         (0..2).each do |row|
-          values_index = col*3 + row
-          self[col + start[0], row + start[1]] = values[values_index]
+          values_index = column * 3 + row
+          self[column + start[0], row + start[1]] = values[values_index]
         end
       end
     end
 
     def block(index)
-      start = start_coordinates_for_block(index)
-      (0..2).collect do |col|
+      start = origin_for_block(index)
+      (0..2).collect do |column|
         (0..2).collect do |row|
-          value_at(col + start[0], row + start[1])
+          value_at(column + start[0], row + start[1])
         end
       end.flatten(1)
     end
@@ -69,9 +73,9 @@ module Sudoku
       (0..8).collect{|i| block(i)}
     end
 
-    def start_coordinates_for_block(index)
+    def origin_for_block(index)
+      column = (index * 3) % 9
       row = (index / 3)*3
-      column = (index*3) % 9
       [column, row]
     end
   end

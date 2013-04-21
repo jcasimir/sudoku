@@ -87,10 +87,10 @@ describe Sudoku::Board do
     end
   end
 
-  describe ".start_coordinates_for_block" do
+  describe ".origin_for_block" do
     it "returns the coordinates for a given block index" do
-      expect( Sudoku::Board.new.start_coordinates_for_block(4) ).to eq [3,3]
-      expect( Sudoku::Board.new.start_coordinates_for_block(2) ).to eq [6,0]
+      expect( Sudoku::Board.new.origin_for_block(4) ).to eq [3,3]
+      expect( Sudoku::Board.new.origin_for_block(2) ).to eq [6,0]
     end
   end
 
