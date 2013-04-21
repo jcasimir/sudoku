@@ -1,8 +1,8 @@
-## Sudoku Solver
+# Sudoku Solver
 
 On Saturday, April 20th 2013, I participated in a NAAAP "Day in the Field" workshop at the Colorado School of Mines. In this session I worked with two students and one other mentor to demonstrate and practice test-driven development in Ruby. These are the results.
 
-### From the Command Line
+## From the Command Line
 
 * Create a plain-text file with the Sudoku problem to be solved
 * Use periods for each blank to be determined
@@ -20,7 +20,7 @@ Where `your_problem_file` is the path/filename of your input problem. For instan
 ruby ./lib/sudoku/runner.rb ./samples/problem_1
 ```
 
-### From Ruby
+## From Ruby
 
 You can also use the library from your own Ruby program or IRB session:
 
@@ -31,7 +31,7 @@ board.solve
 Sudoku::Printer.print(board)
 ```
 
-### License
+## License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
