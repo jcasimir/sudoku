@@ -5,15 +5,13 @@ describe Sudoku::Solver do
 	it "solves a complex puzzle" do
 		starter = Sudoku::Parser.parse('./samples/problem_1')
 		completed = Sudoku::Parser.parse('./samples/problem_1_solution')
-		solved = Sudoku::Solver.solve(starter)
-		expect( solved ).to(eq(completed))
+		expect( starter.solve ).to eq(completed)
 	end
 
 	it "solves an already solved puzzle" do
 		starter = Sudoku::Parser.parse('./samples/problem_1_solution')
 		completed = Sudoku::Parser.parse('./samples/problem_1_solution')
-		solved = Sudoku::Solver.solve(starter)
-		expect( solved ).to(eq(completed))
+		expect( starter.solve ).to(eq(completed))
 	end
 
   it "solves a puzzle with only one missing cell per row" do
@@ -21,36 +19,32 @@ describe Sudoku::Solver do
     starter.rows.each do |row|
       row[rand(9)] = nil
     end
-    solved = Sudoku::Solver.solve(starter)
     completed = Sudoku::Parser.parse('./samples/problem_1_solution')
-    expect( solved ).to(eq(completed))
+    expect( starter.solve ).to(eq(completed))
   end
 
   it "solves a puzzle with only one missing cell per column" do
     starter = Sudoku::Parser.parse('./samples/problem_1_solution')
     starter.set_row(0, Array.new(9))
-    solved = Sudoku::Solver.solve(starter)
     completed = Sudoku::Parser.parse('./samples/problem_1_solution')
-    expect( solved ).to(eq(completed))
+    expect( starter.solve ).to(eq(completed))
   end
 
   it "solves an element which can only be found by solving the block" do
     starter = Sudoku::Parser.parse('./samples/problem_1_solution')
     starter[0,0] = starter[3,0] = starter[0,3] = starter[3,3] = nil
-    solved = Sudoku::Solver.solve(starter)
-    expect( solved.value_at(0,0) ).to eq 4
+    expect( starter.solve.value_at(0,0) ).to eq 4
   end
 
   it "solves a board with just one blank block" do
-    input = Sudoku::Parser.parse('./samples/problem_1_solution')
-    (0..2).each do |col|
+    starter = Sudoku::Parser.parse('./samples/problem_1_solution')
+    (0..2).each do |column|
       (0..2).each do |row|
-        input[col, row] = nil
+        starter[column, row] = nil
       end
     end
-    result = Sudoku::Solver.solve(input)
     expected = Sudoku::Parser.parse('./samples/problem_1_solution')
-    expect( result ).to eq expected
+    expect( starter.solve ).to eq expected
 
   end
 
