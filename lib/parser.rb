@@ -3,24 +3,19 @@ require './lib/board'
 module Sudoku
   class Parser
     def self.parse(path)
-      board = Sudoku::Board.new
-      input_file = File.open(path, 'r')
-      input_file.each_with_index do |row, y|
-        values = row.chomp.split("").collect do |cell| 
-          text_to_integer(cell)
+      Sudoku::Board.new.tap do |board|
+        File.readlines(path).each_with_index do |row, y|
+          board.set_row(y, parse_line(row))
         end
-        board.set_row(y, values)
       end
-      
-      return board
     end
 
-    def self.text_to_integer(input)
-      if input == "."
-        nil
-      else
-        input.to_i
-      end
+    def self.parse_line(line)
+      line.chomp.split("").collect{|char| parse_character(char)}
+    end
+
+    def self.parse_character(input)
+      input != "." ? input.to_i : nil
     end
   end
 end
